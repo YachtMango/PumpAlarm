@@ -2,7 +2,7 @@
 # Nigel Armstrong June 2022
 # v0.1
 #
-# Programme to sound an alarm if pump mis left running.
+# Programme to sound an alarm if pump is left running longer than a certain time
 #
 from time import sleep   
 import RPi.GPIO as GPIO
@@ -14,8 +14,8 @@ try:
     while False:        # while pump if off; set buzzer to off
         if GPIO.input(4):
             GPIO.output(24,0)
-    else:               # when pump is on - wait ?? and then turn in alarm buzzer
+    else:               # when pump is on - wait ?? and then turn on alarm buzzer
         sleep(420)
             GPIO.output(24,1)
 finally:
-   GPIO.cleanup()       # cleans up GOIO 
+   GPIO.cleanup()       # cleans up GPIO 
