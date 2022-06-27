@@ -1,14 +1,21 @@
 # Pump Alarm 
 # Nigel Armstrong June 2022
 # v0.1
-import time
-import datetime
-# import RPi.GPIO as GPIO
 #
-# 
-# 
-# while pin is high 
-time.sleep(10)
+# Programme to sound an alarm if pump mis left running.
+#
+from time import sleep   
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(4, GPIO.IN, initial=0) # pump 
+GPIO.setup(24, GPIO.OUT, initial=0) # alarm buzzer
 
-# GPIO.cleanup()
-^
+try:
+    while False:        # while pump if off; set buzzer to off
+        if GPIO.input(4):
+            GPIO.output(24,0)
+    else:               # when pump is on - wait ?? and then turn in alarm buzzer
+        sleep(420)
+            GPIO.output(24,1)
+finally:
+   GPIO.cleanup()       # cleans up GOIO 
