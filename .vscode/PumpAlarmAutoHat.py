@@ -8,7 +8,7 @@
 import sys
 from time import sleep
 import automationhat
-time.sleep(0.1) # Short pause after ads1015 class creation recommended
+sleep(0.1) # Short pause after ads1015 class creation recommended
 
 try:
     from PIL import Image, ImageDraw
@@ -73,4 +73,4 @@ while True:
     # Draw the image to the display
     disp.display(image)
 
-    time.sleep(0.25)
+    sleep(0.25)
