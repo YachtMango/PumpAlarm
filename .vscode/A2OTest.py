@@ -26,7 +26,7 @@ Install with: sudo pip{v} install fonts font-roboto
 
 print("""A2OTest.py
 
-When Analog is oin then buzzer sounds 
+When Analog 1 is on then buzzer sounds 
 
 Press CTRL+C to exit.
 """)
@@ -84,10 +84,10 @@ def dispvalue():
  
 def switchon():   
 	while False:        # while pump is off; set buzzer to off
-		if automationhat.analog.one.off:
-			automationhat.output.one.off
-		else:               # when pump is on - wait ?? and then turn on alarm buzzer
-			automationhat.output.one.on
+		if automationhat.analog.one.off():
+			automationhat.output.one.off()
+		else:               # when pump is on turn on alarm buzzer
+			automationhat.output.one.on()
 		sleep(1)            # wait 1 second
         
 thread1 = threading.Thread(target=dispvalue)
