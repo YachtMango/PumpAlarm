@@ -62,12 +62,12 @@ def dispvalue():
 		offset = 0
 
 		# Open our background image.
-		image = Image.open("images/analog-inputs-blank.jpg")
+		image = Image.open("images/inputs-blank.jpg")
 		draw = ImageDraw.Draw(image)
 
 		# Draw the text and bar for each channel in turn.
 		for channel in range(3):
-			reading = automationhat.analog[channel].read()
+			reading = automationhat.input[channel].read()
 			draw.text((text_x, text_y + offset), "{reading:.2f}".format(reading=reading), font=font, fill=colour)
 
 			# Scale bar dependent on channel reading.
@@ -83,12 +83,14 @@ def dispvalue():
 		sleep(0.25)
  
 def switchon():   
-	while False:        # while pump is off; set buzzer to off
-		if automationhat.analog.one.off():
-			automationhat.output.one.off()
-		else:               # when pump is on turn on alarm buzzer
-			automationhat.output.one.on()
-		sleep(1)            # wait 1 second
+    while True:        # while pump is off; set buzzer to off
+        if automationhat.input.one.is_off():
+            automationhat.output.one.off()
+
+        else:               # when pump is on turn on alarm buzzer after sleep time
+            sleep(5)
+            automationhat.output.one.on()
+    sleep(1)            # wait 1 second
         
 thread1 = threading.Thread(target=dispvalue)
 thread1.start()
