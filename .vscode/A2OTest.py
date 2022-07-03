@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-
+# Pump Alarm via AutomationHat
+# Nigel Armstrong June 2022
+# v0.1
+#
+# Programme to sound an alarm if pump is left running longer than a certain time
+#
 import sys
 from time import sleep 
 import threading
