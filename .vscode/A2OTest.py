@@ -31,7 +31,7 @@ Install with: sudo pip{v} install fonts font-roboto
 
 print("""A2OTest.py
 
-When Analog 1 is on then buzzer sounds 
+When Input 1 is on then buzzer sounds from Output 1
 
 Press CTRL+C to exit.
 """)
