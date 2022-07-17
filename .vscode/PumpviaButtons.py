@@ -94,14 +94,17 @@ def buttons():
     while True:        #          
         if automationhat.input.one.is_on() and automationhat.input.two.is_on():
             automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
+            print ("Input 1 and 2")
             sleep(InputC)
             automationhat.relay.one.off()
         elif automationhat.input.one.is_on():  
             automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
+            print ("Input 1")
             sleep(InputA)
             automationhat.relay.one.off()
         elif automationhat.input.two.is_on(): 
             automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
+            print ("Input 2")
             sleep(InputB)
             automationhat.relay.one.off()
         # elif automationhat.input.one.on() and automationhat.input.two.on():
