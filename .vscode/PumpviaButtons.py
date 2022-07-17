@@ -50,46 +50,42 @@ disp = ST7735.ST7735(
     spi_speed_hz=4000000
 )
 
-# Initialise display.
+# Initialize display.
 disp.begin()
 
-colour = (255, 181, 86)
-font = ImageFont.truetype(UserFont, 12)
+on_colour = (99, 225, 162)
+off_colour = (235, 102, 121)
 
 # Values to keep everything aligned nicely.
-text_x = 110
-text_y = 34
+on_x = 115
+on_y = 35
 
-bar_x = 25
-bar_y = 37
-bar_height = 8
-bar_width = 73
+off_x = 46
+off_y = on_y
 
-def dispvalue():
-	while True:
-		# Value to increment for spacing text and bars vertically.
-		offset = 0
+dia = 10
 
-		# Open our background image.
-		image = Image.open("images/inputs-blank.jpg")
-		draw = ImageDraw.Draw(image)
+while True:
+    # Value to increment for spacing circles vertically.
+    offset = 0
 
-		# Draw the text and bar for each channel in turn.
-		for channel in range(3):
-			reading = automationhat.input[channel].read()
-			draw.text((text_x, text_y + offset), "{reading:.2f}".format(reading=reading), font=font, fill=colour)
+    # Open our background image.
+    image = Image.open("images/inputs-blank.jpg")
+    draw = ImageDraw.Draw(image)
 
-			# Scale bar dependent on channel reading.
-			width = int(bar_width * (reading / 24.0))
+    # Draw the circle for each channel in turn.
+    for channel in range(3):
+        if automationhat.input[channel].is_on():
+            draw.ellipse((on_x, on_y + offset, on_x + dia, on_y + dia + offset), on_colour)
+        elif automationhat.input[channel].is_off():
+            draw.ellipse((off_x, off_y + offset, off_x + dia, off_y + dia + offset), off_colour)
 
-			draw.rectangle((bar_x, bar_y + offset, bar_x + width, bar_y + bar_height + offset), colour)
+        offset += 14
 
-		offset += 14
+    # Draw the image to the display
+    disp.display(image)
 
-		# Draw the image to the display.
-		disp.display(image)
-
-		sleep(0.25)
+    sleep(0.25)
  
 def buttons():   
     while True:        # while pump is off; set buzzer to off
