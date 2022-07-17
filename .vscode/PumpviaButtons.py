@@ -98,7 +98,7 @@ def buttons():
 
         else:               # when pump is on turn on alarm buzzer after sleep time
             sleep(3)
-            automationhat.relay.one.off()
+            automationhat.relay.one.on()
     sleep(1)            # wait 1 second
         
 thread1 = threading.Thread(target=dispvalue)
