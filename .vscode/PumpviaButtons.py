@@ -88,11 +88,11 @@ while True:
     sleep(0.25)
 
 def buttons():   
-    while True:        # while pump is off; set buzzer to off
+    while True:        # while inputs off; set pump off
         if automationhat.input.one.is_off():
             automationhat.relay.one.off()
 
-        else:               # when pump is on turn on alarm buzzer after sleep time
+        else:               # when inout is High the run pump for sleep time
             automationhat.relay.one.on()
             sleep(InputA)
     sleep(1)            # wait 1 second
