@@ -36,7 +36,8 @@ Install with: sudo pip{v} install fonts font-roboto
 print("""PumpviaButtons.py
 
 When Button 1 is pressed pump ( relay 1) runs for X seconds:
-When Button 2 is pressed pumps runs for Y seconds.
+When Button 2 is pressed pumps runs for Y seconds:
+When both Buttons are pressed pump runs for Z seconds.
 
 Press CTRL+C to exit.
 """)
@@ -91,13 +92,13 @@ def dispvalue():
 
 def buttons():   
     while True:        #          
-        if automationhat.input.one.on() and automationhat.input.two.on():
+        if automationhat.input.one.is_on() and automationhat.input.two.is_on():
             automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
             sleep(InputC)
-        elif automationhat.input.one.on():  
+        elif automationhat.input.one.is_on():  
             automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
             sleep(InputA)
-        elif automationhat.input.two.on(): 
+        elif automationhat.input.two.is_on(): 
             automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             sleep(InputB)
         # elif automationhat.input.one.on() and automationhat.input.two.on():
