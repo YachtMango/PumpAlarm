@@ -5,8 +5,8 @@
 #
 # Programme to contorl pump when buttons are pressed
 #
-InputA = 60
-InputB = 90
+InputA = 6
+InputB = 9
 
 import sys
 from time import sleep 
@@ -86,7 +86,7 @@ while True:
     disp.display(image)
 
     sleep(0.25)
- 
+
 def buttons():   
     while True:        # while pump is off; set buzzer to off
         if automationhat.input.one.is_off():
@@ -94,7 +94,7 @@ def buttons():
 
         else:               # when pump is on turn on alarm buzzer after sleep time
             automationhat.relay.one.on()
-            sleep(5)
+            sleep(InputA)
     sleep(1)            # wait 1 second
         
 thread1 = threading.Thread(target=dispvalue)
