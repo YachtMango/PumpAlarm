@@ -5,9 +5,9 @@
 #
 # Programme to contorl pump when buttons are pressed
 #
-InputA = 6
-InputB = 9
-InputC = 15
+InputA = 3
+InputB = 6
+InputC = 9
 
 import sys
 from time import sleep 
@@ -70,14 +70,14 @@ def LCD():
     dia = 10
 
     while True:
-    # Value to increment for spacing circles vertically.
+        # Value to increment for spacing circles vertically.
         offset = 0
 
-    # Open our background image.
+        # Open our background image.
         image = Image.open("images/inputs-blank.jpg")
         draw = ImageDraw.Draw(image)
 
-    # Draw the circle for each channel in turn.
+        # Draw the circle for each channel in turn.
         for channel in range(3):
             if automationhat.input[channel].is_on():
                 draw.ellipse((on_x, on_y + offset, on_x + dia, on_y + dia + offset), on_colour)
@@ -86,7 +86,7 @@ def LCD():
 
         offset += 14
 
-    # Draw the image to the display
+        # Draw the image to the display
         disp.display(image)
 
         sleep(0.25)
@@ -108,9 +108,6 @@ def buttons():
             print ("Input 2")
             sleep(InputB)
             automationhat.relay.one.off()
-        # elif automationhat.input.one.on() and automationhat.input.two.on():
-        #    automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
-        #    sleep(InputC)
     
 thread1 = threading.Thread(target=LCD)
 thread1.start()
