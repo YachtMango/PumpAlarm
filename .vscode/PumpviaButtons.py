@@ -65,38 +65,38 @@ off_y = on_y
 
 dia = 10
 
-while True:
+def dispvalue():
+    while True:
     # Value to increment for spacing circles vertically.
-    offset = 0
+        offset = 0
 
     # Open our background image.
-    image = Image.open("images/inputs-blank.jpg")
-    draw = ImageDraw.Draw(image)
+        image = Image.open("images/inputs-blank.jpg")
+        draw = ImageDraw.Draw(image)
 
     # Draw the circle for each channel in turn.
-    for channel in range(3):
-        if automationhat.input[channel].is_on():
-            draw.ellipse((on_x, on_y + offset, on_x + dia, on_y + dia + offset), on_colour)
-        elif automationhat.input[channel].is_off():
-            draw.ellipse((off_x, off_y + offset, off_x + dia, off_y + dia + offset), off_colour)
+        for channel in range(3):
+            if automationhat.input[channel].is_on():
+                draw.ellipse((on_x, on_y + offset, on_x + dia, on_y + dia + offset), on_colour)
+            elif automationhat.input[channel].is_off():
+                draw.ellipse((off_x, off_y + offset, off_x + dia, off_y + dia + offset), off_colour)
 
         offset += 14
 
     # Draw the image to the display
-    disp.display(image)
+        disp.display(image)
 
-    sleep(0.25)
+        sleep(0.25)
 
 def buttons():   
-    while True:        # while inputs off; set pump off
+    while True:        # while inputs off; set pump off            
         if automationhat.input.one.is_off():
-            automationhat.relay.one.off()
+                automationhat.relay.one.off()
 
         else:               # when inout is High the run pump for sleep time
             automationhat.relay.one.on()
-            sleep(InputA)
-    sleep(1)            # wait 1 second
-        
+            sleep(5)
+    
 thread1 = threading.Thread(target=dispvalue)
 thread1.start()
 
