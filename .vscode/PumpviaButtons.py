@@ -7,6 +7,7 @@
 #
 InputA = 6
 InputB = 9
+InputC = 15
 
 import sys
 from time import sleep 
@@ -89,13 +90,18 @@ def dispvalue():
         sleep(0.25)
 
 def buttons():   
-    while True:        # while inputs off; set pump off            
-        if automationhat.input.one.is_off():
+    while True:        #          
+        if automationhat.input.one.is_off() or automationhat.input.two.is_off():
                 automationhat.relay.one.off()
-
-        else:               # when inout is High the run pump for sleep time
-            automationhat.relay.one.on()
-            sleep(5)
+        elif automationhat.input.one.on():  
+            automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
+            sleep(InputA)
+        elif automationhat.input.two.on(): 
+            automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
+            sleep(InputB)
+        elif automationhat.input.one.on() and automationhat.input.two.on():
+            automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
+            sleep(InputC)
     
 thread1 = threading.Thread(target=dispvalue)
 thread1.start()
