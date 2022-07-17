@@ -91,17 +91,18 @@ def dispvalue():
 
 def buttons():   
     while True:        #          
-        if automationhat.input.one.is_off() or automationhat.input.two.is_off():
-                automationhat.relay.one.off()
+        if automationhat.input.one.on() and automationhat.input.two.on():
+            automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
+            sleep(InputC)
         elif automationhat.input.one.on():  
             automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
             sleep(InputA)
         elif automationhat.input.two.on(): 
             automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             sleep(InputB)
-        elif automationhat.input.one.on() and automationhat.input.two.on():
-            automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
-            sleep(InputC)
+        # elif automationhat.input.one.on() and automationhat.input.two.on():
+        #    automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
+        #    sleep(InputC)
     
 thread1 = threading.Thread(target=dispvalue)
 thread1.start()
