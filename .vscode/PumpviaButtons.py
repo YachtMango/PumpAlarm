@@ -42,32 +42,33 @@ When both Buttons are pressed pump runs for Z seconds.
 Press CTRL+C to exit.
 """)
 
-# Create ST7735 LCD display class.
-disp = ST7735.ST7735(
-    port=0,
-    cs=ST7735.BG_SPI_CS_FRONT,
-    dc=9,
-    backlight=25,
-    rotation=270,
-    spi_speed_hz=4000000
-)
+def LCD():
 
-# Initialize display.
-disp.begin()
+    # Create ST7735 LCD display class.
+    disp = ST7735.ST7735(
+        port=0,
+        cs=ST7735.BG_SPI_CS_FRONT,
+        dc=9,
+        backlight=25,
+        rotation=270,
+        spi_speed_hz=4000000
+    )
 
-on_colour = (99, 225, 162)
-off_colour = (235, 102, 121)
+    # Initialize display.
+    disp.begin()
 
-# Values to keep everything aligned nicely.
-on_x = 115
-on_y = 35
+    on_colour = (99, 225, 162)
+    off_colour = (235, 102, 121)
 
-off_x = 46
-off_y = on_y
+    # Values to keep everything aligned nicely.
+    on_x = 115
+    on_y = 35
 
-dia = 10
+    off_x = 46
+    off_y = on_y
 
-def dispvalue():
+    dia = 10
+
     while True:
     # Value to increment for spacing circles vertically.
         offset = 0
@@ -111,7 +112,7 @@ def buttons():
         #    automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
         #    sleep(InputC)
     
-thread1 = threading.Thread(target=dispvalue)
+thread1 = threading.Thread(target=LCD)
 thread1.start()
 
 thread2 = threading.Thread(target=buttons)
