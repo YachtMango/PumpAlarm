@@ -27,9 +27,10 @@ Install with: sudo apt install python{v}-pil
 
 import ST7735 as ST7735
 
-print("""input.py
+print("""PumpviaButtons.py
 
-Bla Bla
+Programme to run pump via relay on Automation Hat mini based for a dureation depending on
+which input button is pressed.
 
 Press CTRL+C to exit.
 """)
@@ -88,7 +89,7 @@ def Buttons():
             automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
             with open('pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
-            print ("Pump runs for ", (InputA), "seconds")
+            print ("Pump runs for ",(InputA), "seconds")
             sleep(InputA)
             automationhat.relay.one.off()
 
@@ -96,7 +97,7 @@ def Buttons():
             automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             with open('pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
-            print ("Pump runs for ", (InputB), "seconds")
+            print ("Pump runs for ",(InputB), "seconds")
             sleep(InputB)
             automationhat.relay.one.off()
 
