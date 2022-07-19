@@ -101,7 +101,7 @@ def Buttons():
     while True:        #          
         if automationhat.input.one.is_on():  
             automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
-            with open('pumplogfile.txt','a') as l:
+            with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
             print ("Input 1" ,(InputA), "seconds")
             sleep(InputA)
@@ -109,7 +109,7 @@ def Buttons():
         elif automationhat.input.two.is_on(): 
             automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             print ("Input 2", (InputB), "seconds")
-            with open('pumplogfile.txt','a') as l:
+            with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
             sleep(InputB)
             automationhat.relay.one.off()
