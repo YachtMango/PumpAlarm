@@ -1,24 +1,17 @@
 #!/usr/bin/env python3
-# Pump Alarm via AutomationHat and Buttons
-# Nigel Armstrong July 2022
-# v0.1
-#
-# Programme to contorl pump when buttons are pressed
-#
+
 InputA = 3
 InputB = 6
 InputC = 9
 
-from datetime import time
 import sys
-from time import sleep 
+from time import sleep
 import threading
-# from tkinter import w
 import automationhat
 sleep(0.1) # Short pause after ads1015 class creation recommended
 
 try:
-    from PIL import Image, ImageFont, ImageDraw
+    from PIL import Image, ImageDraw
 except ImportError:
     print("""This example requires PIL.
 Install with: sudo apt install python{v}-pil
@@ -27,25 +20,14 @@ Install with: sudo apt install python{v}-pil
 
 import ST7735 as ST7735
 
-try:
-    from fonts.ttf import RobotoBlackItalic as UserFont
-except ImportError:
-    print("""This example requires the Roboto font.
-Install with: sudo pip{v} install fonts font-roboto
-""".format(v="" if sys.version_info.major == 2 else sys.version_info.major))
-    sys.exit(1)
+print("""input.py
 
-print("""PumpviaButtons.py
-
-When Button 1 is pressed pump ( relay 1) runs for X seconds:
-When Button 2 is pressed pumps runs for Y seconds:
-When both Buttons are pressed pump runs for Z seconds.
+Bla Bla
 
 Press CTRL+C to exit.
 """)
 
 def LCD():
-
     # Create ST7735 LCD display class.
     disp = ST7735.ST7735(
         port=0,
@@ -86,37 +68,45 @@ def LCD():
             elif automationhat.input[channel].is_off():
                 draw.ellipse((off_x, off_y + offset, off_x + dia, off_y + dia + offset), off_colour)
 
-        offset += 14
+            offset += 14
 
         # Draw the image to the display
         disp.display(image)
 
         sleep(0.25)
 
-def buttons():   
+def Buttons():
+    bcount = 0	# initialize count
     while True:        #          
-        if automationhat.input.one.is_on() and automationhat.input.two.is_on():
-            automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
-            print ("Input 1 and 2")
-            sleep(InputC)
+        if automationhat.input.two.is_on():
+            (bcount) += 1
+            print (bcount), sleep(.3)
+            while True:        #          
+                if (bcount)== 1:
+                    automationhat.relay.one.on()
+                    print("Runs for", (InputA), "seconds")
+                    sleep(InputA)
+                    automationhat.relay.one.off()
+                elif (bcount) == 2:  
+                    automationhat.relay.one.on() 
+                    print ("Runs for", (InputB), "seconds")
+                    sleep(InputB)
+                    automationhat.relay.one.off()
+                elif (bcount) == 3: 
+                    automationhat.relay.one.on() 
+                    print ("Runs for", (InputC), "seconds")
+                    sleep(InputC)
+                    automationhat.relay.one.off()
+                else: 
+                    (bcount) == 0
+                    print("counter reset - try again")
+                    automationhat.relay.one.off()
+        else:
             automationhat.relay.one.off()
-        elif automationhat.input.one.is_on():  
-            automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
-            print ("Input 1")
-            with open('pumplogfile.txt','a') as l:
-                l.write(time,'\n') 
-            sleep(InputA)
-            automationhat.relay.one.off()
-        elif automationhat.input.two.is_on(): 
-            automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
-            print ("Input 2")
-            with open('pumplogfile.txt','a') as l:
-                l.write(time,'\n') 
-            sleep(InputB)
-            automationhat.relay.one.off()
-    
+
+           
 thread1 = threading.Thread(target=LCD)
 thread1.start()
 
-thread2 = threading.Thread(target=buttons)
+thread2 = threading.Thread(target=Buttons)
 thread2.start()
