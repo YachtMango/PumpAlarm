@@ -5,10 +5,9 @@
 #
 # Programme to control pump when buttons are pressed
 #
-InputA = 3
-InputB = 6
-InputC = 9
-MESSTXT = "Pump runs" ,(InputA), "seconds"
+InputA = 7
+InputB = 14
+
 
 from datetime import datetime
 import sys
@@ -59,7 +58,7 @@ def LCD():
 
     on_colour = (99, 225, 162)
     off_colour = (235, 102, 121)
-    tfont = ImageFont.truetype(UserFont, 12)
+    tfont = ImageFont.truetype(UserFont, 14)
     colour = (255, 181, 86)
 
     # Values to keep everything aligned nicely.
@@ -79,7 +78,7 @@ def LCD():
         offset = 0
 
         # Open our background image.
-        image = Image.open("images/inputs-blank.jpg")
+        image = Image.open("/home/pi/Pimoroni/automationhat/examples/hat-mini/images/PumpImage.jpg")
         draw = ImageDraw.Draw(image)
 
         # Draw the circle for each channel in turn.
@@ -91,7 +90,7 @@ def LCD():
 
             offset += 14
         if automationhat.relay.one.is_on():
-            draw.text((text_x, text_y + offset), text="Pump running ", font=tfont, fill=colour)
+            draw.text((text_x, text_y + offset), text="Pump is running", font=tfont, fill=colour)
 
         # Draw the image to the display
         disp.display(image)
@@ -102,16 +101,16 @@ def Buttons():
     while True:        #          
         if automationhat.input.one.is_on():  
             automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
-            # with open('pumplogfile.txt','a') as l:
-            #    l.write(datetime.now().strftime("%c") + "\n")
+            with open('pumplogfile.txt','a') as l:
+                l.write(datetime.now().strftime("%c") + "\n")
             print ("Input 1" ,(InputA), "seconds")
             sleep(InputA)
             automationhat.relay.one.off()
         elif automationhat.input.two.is_on(): 
             automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             print ("Input 2", (InputB), "seconds")
-            #with open('pumplogfile.txt','a') as l:
-            #    l.write(datetime.now().strftime("%c") + "\n")
+            with open('pumplogfile.txt','a') as l:
+                l.write(datetime.now().strftime("%c") + "\n")
             sleep(InputB)
             automationhat.relay.one.off()
 
