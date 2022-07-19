@@ -85,15 +85,19 @@ def LCD():
 
 def Buttons():
     while True:        #          
-        if automationhat.input.one.is_on():  
+        if automationhat.input.one.is_on():
             automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
             with open('pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
             print ("Pump runs for ",(InputA), "seconds")
+            # state = automationhat.relay.one.read()
+            # print(state)
             sleep(InputA)
             automationhat.relay.one.off()
 
-        elif automationhat.input.two.is_on(): 
+        elif automationhat.input.two.is_on():
+            state = automationhat.input.two.read()
+            print(state)
             automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             with open('pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")

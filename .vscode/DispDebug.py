@@ -8,6 +8,7 @@
 InputA = 3
 InputB = 6
 InputC = 9
+MESSTXT = "Pump runs" ,(InputA), "seconds"
 
 from datetime import datetime
 import sys
@@ -18,18 +19,26 @@ import automationhat
 sleep(0.1) # Short pause after ads1015 class creation recommended
 
 try:
-    from PIL import Image, ImageDraw
+    from PIL import Image, ImageDraw, ImageFont
 except ImportError:
     print("""This example requires PIL.
 Install with: sudo apt install python{v}-pil
 """.format(v="" if sys.version_info.major == 2 else sys.version_info.major))
     sys.exit(1)
 
+try:
+    from fonts.ttf import RobotoBlackItalic as UserFont
+except ImportError:
+    print("""This example requires the Roboto font.
+Install with: sudo pip{v} install fonts font-roboto
+""".format(v="" if sys.version_info.major == 2 else sys.version_info.major))
+    sys.exit(1)
+
 import ST7735 as ST7735
 
-print("""input.py
+print("""DispDebug.py
 
-Bla Bla
+Programme to debug the ST7735 display
 
 Press CTRL+C to exit.
 """)
@@ -50,6 +59,8 @@ def LCD():
 
     on_colour = (99, 225, 162)
     off_colour = (235, 102, 121)
+    tfont = ImageFont.truetype(UserFont, 12)
+    colour = (255, 181, 86)
 
     # Values to keep everything aligned nicely.
     on_x = 115
@@ -60,6 +71,9 @@ def LCD():
 
     dia = 10
 
+    text_x = 30
+    text_y = 34
+
     while True:
         # Value to increment for spacing circles vertically.
         offset = 0
@@ -69,13 +83,15 @@ def LCD():
         draw = ImageDraw.Draw(image)
 
         # Draw the circle for each channel in turn.
-        for channel in range(3):
+        for channel in range(2):
             if automationhat.input[channel].is_on():
                 draw.ellipse((on_x, on_y + offset, on_x + dia, on_y + dia + offset), on_colour)
             elif automationhat.input[channel].is_off():
                 draw.ellipse((off_x, off_y + offset, off_x + dia, off_y + dia + offset), off_colour)
 
             offset += 14
+        if automationhat.relay.one.is_on():
+            draw.text((text_x, text_y + offset), text="Pump running ", font=tfont, fill=colour)
 
         # Draw the image to the display
         disp.display(image)
@@ -84,23 +100,18 @@ def LCD():
 
 def Buttons():
     while True:        #          
-        if automationhat.input.one.is_on() and automationhat.input.two.is_on():
-            automationhat.relay.one.on()  # when input 1 and 2  is High the run pump for sleep time C
-            print ("Input 1 and 2"(InputC), "seconds")
-            sleep(InputC)
-            automationhat.relay.one.off()
-        elif automationhat.input.one.is_on():  
+        if automationhat.input.one.is_on():  
             automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
-            with open('pumplogfile.txt','a') as l:
-                l.write(datetime.now().strftime("%c") + "\n")
+            # with open('pumplogfile.txt','a') as l:
+            #    l.write(datetime.now().strftime("%c") + "\n")
             print ("Input 1" ,(InputA), "seconds")
             sleep(InputA)
             automationhat.relay.one.off()
         elif automationhat.input.two.is_on(): 
             automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             print ("Input 2", (InputB), "seconds")
-            with open('pumplogfile.txt','a') as l:
-                l.write(datetime.now().strftime("%c") + "\n")
+            #with open('pumplogfile.txt','a') as l:
+            #    l.write(datetime.now().strftime("%c") + "\n")
             sleep(InputB)
             automationhat.relay.one.off()
 
