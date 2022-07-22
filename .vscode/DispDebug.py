@@ -13,7 +13,9 @@ from datetime import datetime
 import sys
 from time import sleep
 import threading
-import automationhat
+import automationhat as ahm
+import RPi.GPIO as GPIO
+import ST7735 as ST7735
 
 sleep(0.1) # Short pause after ads1015 class creation recommended
 
@@ -33,7 +35,7 @@ Install with: sudo pip{v} install fonts font-roboto
 """.format(v="" if sys.version_info.major == 2 else sys.version_info.major))
     sys.exit(1)
 
-import ST7735 as ST7735
+
 
 print("""DispDebug.py
 
@@ -83,13 +85,13 @@ def LCD():
 
         # Draw the circle for each channel in turn.
         for channel in range(2):
-            if automationhat.input[channel].is_on():
+            if ahm.input[channel].is_on():
                 draw.ellipse((on_x, on_y + offset, on_x + dia, on_y + dia + offset), on_colour)
-            elif automationhat.input[channel].is_off():
+            elif ahm.input[channel].is_off():
                 draw.ellipse((off_x, off_y + offset, off_x + dia, off_y + dia + offset), off_colour)
 
             offset += 14
-        if automationhat.relay.one.is_on():
+        if ahm.relay.one.is_on():
             draw.text((text_x, text_y + offset), text="Pump is running", font=tfont, fill=colour)
 
         # Draw the image to the display
@@ -99,20 +101,20 @@ def LCD():
 
 def Buttons():
     while True:        #          
-        if automationhat.input.one.is_on():  
-            automationhat.relay.one.on() # when Input 1 is High the run pump for sleep time A
+        if ahm.input.one.is_on():  
+            ahm.relay.one.on() # when Input 1 is High the run pump for sleep time A
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
             print ("Input 1" ,(InputA), "seconds")
             sleep(InputA)
-            automationhat.relay.one.off()
-        elif automationhat.input.two.is_on(): 
-            automationhat.relay.one.on()  # when Input 2 is High the run pump for sleep time B
+            ahm.relay.one.off()
+        elif ahm.input.two.is_on(): 
+            ahm.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             print ("Input 2", (InputB), "seconds")
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
             sleep(InputB)
-            automationhat.relay.one.off()
+            ahm.relay.one.off()
 
 thread1 = threading.Thread(target=LCD)
 thread1.start()
