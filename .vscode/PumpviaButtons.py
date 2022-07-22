@@ -36,11 +36,15 @@ Install with: sudo pip{v} install fonts font-roboto
 
 print("""PumpviaButtons.py
 
-Programme to run pump via relay on Automation Hat mini based for a dureation depending on
+Programme to run pump via relay on Automation Hat mini based for a duration depending on
 which input button is pressed.
 
 Press CTRL+C to exit.
 """)
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(25, GPIO.OUT)
 
 def LCD():
     # Create ST7735 LCD display class.
@@ -72,6 +76,12 @@ def LCD():
 
     text_x = 30
     text_y = 34
+
+    #if ahm.input.three.is_off():
+    #    GPIO.output(25,1)
+    #else:
+    #    GPIO.output(25,0)
+    #sleep (3)
 
     while True:
         # Value to increment for spacing circles vertically.
@@ -114,8 +124,18 @@ def Buttons():
             sleep(InputB)
             ahm.relay.one.off()
 
+#def Backlight():
+#        if ahm.input.three.is_off():
+#            GPIO.output(25,1)
+#        else:
+#            GPIO.output(25,0)
+#        sleep (3)
+
 thread1 = threading.Thread(target=LCD)
 thread1.start()
 
 thread2 = threading.Thread(target=Buttons)
 thread2.start()
+
+#thread3 = threading.Thread(target=Backlight)
+#thread3.start()
