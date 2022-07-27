@@ -77,12 +77,6 @@ def LCD():
     text_x = 30
     text_y = 34
 
-    #if ahm.input.three.is_off():
-    #    GPIO.output(25,1)
-    #else:
-    #    GPIO.output(25,0)
-    #sleep (3)
-
     while True:
         # Value to increment for spacing circles vertically.
         offset = 0
