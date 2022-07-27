@@ -5,8 +5,8 @@
 #
 # Programme to control pump when buttons are pressed
 #
-InputA = 3  # 3.5 mins  = 210
-InputB = 6  # 7.5 mins  = 450
+InputA = 240  # 3.5 mins  = 210
+InputB = 480  # 7.5 mins  = 450
 
 from datetime import datetime
 import sys
