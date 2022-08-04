@@ -28,6 +28,7 @@ try:
             sleep (3)
         else:
             GPIO.output(13,0)
+        sleep(0.1)
 except KeyboardInterrupt:
     print(" Ctrl-C - quit")
 finally:

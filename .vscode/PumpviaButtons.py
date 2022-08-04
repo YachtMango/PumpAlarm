@@ -104,7 +104,7 @@ def LCD():
 def Buttons():
     while True:        #          
         if ahm.input.one.is_on(): 
-            GPIO.output(25,1) # Esnure backlight is on 
+            GPIO.output(25,1) # Ensure backlight is on 
             ahm.relay.one.on() # when Input 1 is High the run pump for sleep time A
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
@@ -112,13 +112,14 @@ def Buttons():
             sleep(InputA)
             ahm.relay.one.off()
         elif ahm.input.two.is_on(): 
-            GPIO.output(25,1) # Esnure backlight is on
+            GPIO.output(25,1) # Ensure backlight is on
             ahm.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             # print ("Input 2", (InputB), "seconds")
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
                 l.write(datetime.now().strftime("%c") + "\n")
             sleep(InputB)
             ahm.relay.one.off()
+        sleep(0.1) # Reduce CPU time
 
 def Backlight():
     while True:
