@@ -4,7 +4,11 @@
 # Nigel Armstrong July 2022
 #
 from time import sleep
+from datetime import datetime
 import RPi.GPIO as GPIO
+
+InputA = 240  # 3.5 mins  = 210
+InputB = 480  # 7.5 mins  = 450
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -24,6 +28,7 @@ GPIO.add_event_detect(11, GPIO.FALLING, bouncetime=200) # wait for falling
 try:
     while True: # wait for edge
         if GPIO.event_detected(11):
+            print(datetime.now().strftime("%c") + " " + str(InputA))
             GPIO.output(13,1)
             sleep (3)
         else:

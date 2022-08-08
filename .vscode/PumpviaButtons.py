@@ -107,7 +107,7 @@ def Buttons():
             GPIO.output(25,1) # Ensure backlight is on 
             ahm.relay.one.on() # when Input 1 is High the run pump for sleep time A
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
-                l.write(datetime.now().strftime("%c") + "\n")
+                l.write(datetime.now().strftime("%c") + " " + str(InputA) + " " + ahm.analog.one.read() + " volts" + "\n")
             # print ("Input 1" ,(InputA), "seconds")
             sleep(InputA)
             ahm.relay.one.off()
@@ -116,10 +116,10 @@ def Buttons():
             ahm.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             # print ("Input 2", (InputB), "seconds")
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
-                l.write(datetime.now().strftime("%c") + "\n")
+                l.write(datetime.now().strftime("%c") + " " + str(InputB) + " " + ahm.analog.one.read() + " volts" + "\n")
             sleep(InputB)
             ahm.relay.one.off()
-        sleep(0.1) # Reduce CPU time
+        sleep(0.2) # Reduce CPU time
 
 def Backlight():
     while True:
