@@ -15,6 +15,8 @@ import threading
 import automationhat as ahm
 import RPi.GPIO as GPIO
 import ST7735 as ST7735
+from vcgencmd import Vcgencmd as 
+vcgm = Vcgencmd()
 
 sleep(0.1) # Short pause after ads1015 class creation recommended
 
@@ -62,7 +64,7 @@ def LCD():
 
     on_colour = (99, 225, 162)
     off_colour = (235, 102, 121)
-    tfont = ImageFont.truetype(UserFont, 14)
+    tfont = ImageFont.truetype(UserFont, 16)
     colour = (255, 181, 86)
 
     # Values to keep everything aligned nicely.
@@ -104,12 +106,11 @@ def LCD():
 def Buttons():
     while True:        #          
         if ahm.input.one.is_on(): 
+            ctemp = vcgm.measure_temp()
             GPIO.output(25,1) # Ensure backlight is on 
             ahm.relay.one.on() # when Input 1 is High the run pump for sleep time A
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
-            #    l.write(datetime.now().strftime("%c") + " " + str(InputA) + "\n")
-                l.write(datetime.now().strftime("%c") + " " + str(InputA) + " " + str(ahm.analog.one.read()) + " volts" + "\n")
-            # print ("Input 1" ,(InputA), "seconds")
+                l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + "Runtime " + str(InputA) + " Input Volts" + str(ahm.analog.one.read())  + "CPU Temp = "str(ctemp) + " °C" "\n")
             sleep(InputA)
             ahm.relay.one.off()
         elif ahm.input.two.is_on(): 
