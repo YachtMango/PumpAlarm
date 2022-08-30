@@ -84,8 +84,8 @@ def LCD():
         offset = 0
 
         # Open our background image.
-        # image = Image.open("/home/pi/Pimoroni/automationhat/examples/hat-mini/images/PumpImage.jpg")
-        # draw = ImageDraw.Draw(image)
+        image = Image.open("/home/pi/Pimoroni/automationhat/examples/hat-mini/images/PumpImage.jpg")
+        draw = ImageDraw.Draw(image)
 
         # Draw the circle for each channel in turn.
         for channel in range(2):
