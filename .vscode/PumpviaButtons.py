@@ -15,7 +15,7 @@ import threading
 import automationhat as ahm
 import RPi.GPIO as GPIO
 import ST7735 as ST7735
-from vcgencmd import Vcgencmd as 
+from vcgencmd import Vcgencmd
 vcgm = Vcgencmd()
 
 sleep(0.1) # Short pause after ads1015 class creation recommended
@@ -84,8 +84,8 @@ def LCD():
         offset = 0
 
         # Open our background image.
-        image = Image.open("/home/pi/Pimoroni/automationhat/examples/hat-mini/images/PumpImage.jpg")
-        draw = ImageDraw.Draw(image)
+        # image = Image.open("/home/pi/Pimoroni/automationhat/examples/hat-mini/images/PumpImage.jpg")
+        # draw = ImageDraw.Draw(image)
 
         # Draw the circle for each channel in turn.
         for channel in range(2):
@@ -104,21 +104,20 @@ def LCD():
         sleep(0.25)
 
 def Buttons():
-    while True:        #          
+    while True:          
         if ahm.input.one.is_on(): 
             ctemp = vcgm.measure_temp()
             GPIO.output(25,1) # Ensure backlight is on 
             ahm.relay.one.on() # when Input 1 is High the run pump for sleep time A
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
-                l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + "Runtime " + str(InputA) + " Input Volts" + str(ahm.analog.one.read())  + "CPU Temp = "str(ctemp) + " °C" "\n")
+                l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + " Runtime " + str(InputA) + " Input Volts " + str(ahm.analog.one.read())  + " CPU Temp = " + str(ctemp) + " °C" "\n")
             sleep(InputA)
             ahm.relay.one.off()
         elif ahm.input.two.is_on(): 
             GPIO.output(25,1) # Ensure backlight is on
             ahm.relay.one.on()  # when Input 2 is High the run pump for sleep time B
-            # print ("Input 2", (InputB), "seconds")
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
-                l.write(datetime.now().strftime("%c") + " " + str(InputB)  + " " + str(ahm.analog.one.read()) + " volts" + "\n")
+                l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + " Runtime " + str(InputB) + " Input Volts " + str(ahm.analog.one.read())  + " CPU Temp = " + str(ctemp) + " °C" "\n")
             sleep(InputB)
             ahm.relay.one.off()
         sleep(0.2) # Reduce CPU time
