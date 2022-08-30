@@ -113,7 +113,8 @@ def Buttons():
                 l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + " Runtime " + str(InputA) + " Input Volts " + str(ahm.analog.one.read())  + " CPU Temp = " + str(ctemp) + " °C" "\n")
             sleep(InputA)
             ahm.relay.one.off()
-        elif ahm.input.two.is_on(): 
+        elif ahm.input.two.is_on():
+            ctemp = vcgm.measure_temp() 
             GPIO.output(25,1) # Ensure backlight is on
             ahm.relay.one.on()  # when Input 2 is High the run pump for sleep time B
             with open('/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt','a') as l:
