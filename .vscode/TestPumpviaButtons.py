@@ -14,7 +14,6 @@ INPUTB = 6  # 7.5 mins  = 450
 IMAGE_FILE = "/home/pi/PumpImage.jpg"
 LOG_FILE = "/home/pi/pumplogfile.txt"
 
-
 from datetime import datetime
 import sys
 from time import sleep
