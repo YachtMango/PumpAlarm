@@ -10,8 +10,8 @@ INPUTB = 6  # 7.5 mins  = 450
 IMAGE_FILE = "/home/pi/PumpImage.jpg"
 LOG_FILE = "/home/pi/pumplogfile.txt"
 MESSAGE1 = "Press I or II to run the pump!"
-MESSAGE2 = f"Pump runs for {INPUTA} secs"
-MESSAGE3 = f"Pump runs for {INPUTB} secs"
+MESSAGE2 = f"Pump runs for \n {INPUTA} secs"
+MESSAGE3 = f"Pump runs for \n {INPUTB} secs"
 
 from datetime import datetime
 import sys
@@ -47,8 +47,10 @@ HEIGHT = disp.height
 
 img = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
 draw = ImageDraw.Draw(img)
-font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 13)
-size_x, size_y = draw.textsize(MESSAGE1, font)
+fontM1 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 32)
+fontM2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 18)
+fontM3 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 18)
+size_x, size_y = draw.textsize(MESSAGE1, fontM1)
 text_x = 160
 text_y = (80 - size_y) // 2
 t_start = time.time()
@@ -57,14 +59,14 @@ while True:
     x = (time.time() - t_start) * 100
     x %= (size_x + 160)
     draw.rectangle((0, 0, 160, 80), (0, 0, 0))
-    draw.text((int(text_x - x), text_y), MESSAGE1, font=font, fill=(255, 255, 255))
+    draw.text((int(text_x - x), text_y), MESSAGE1, font=fontM1, fill=(255, 255, 255))
     disp.display(img)
     while ahm.input.one.is_on():
             GPIO.output(25,1) # Ensure backlight is on
             ctemp = vcgm.measure_temp() 
-            ahm.relay.one.on() # when Input 1 is High the run pump for sleep time A
+            ahm.relay.one.on() # 
             draw.rectangle((0, 0, 160, 80), (0, 0, 0))
-            draw.text((int(text_x - x), text_y), MESSAGE2, font=font, fill=(255, 255, 255))
+            draw.text((5,20), MESSAGE2, font=fontM2, fill=(255, 255, 255))
             disp.display(img)
             with open(LOG_FILE,'a') as l:
                 l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + " Runtime " + str(INPUTA) + " Input Volts " + str(ahm.analog.one.read())  + " CPU Temp = " + str(ctemp) + " °C" "\n")
@@ -73,9 +75,9 @@ while True:
     while ahm.input.two.is_on():
             ctemp = vcgm.measure_temp() 
             GPIO.output(25,1) # Ensure backlight is on
-            ahm.relay.one.on()  # when Input 2 is High the run pump for sleep time B
+            ahm.relay.one.on()  # 
             draw.rectangle((0, 0, 160, 80), (0, 0, 0))
-            draw.text((int(text_x - x), text_y), MESSAGE3, font=font, fill=(255, 255, 255))
+            draw.text((5,20), MESSAGE3, font=fontM3, fill=(255, 255, 255))
             disp.display(img)
             with open(LOG_FILE,'a') as l:
                 l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + " Runtime " + str(INPUTB) + " Input Volts " + str(ahm.analog.one.read())  + " CPU Temp = " + str(ctemp) + " °C" "\n")
