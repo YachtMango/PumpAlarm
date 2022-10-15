@@ -5,7 +5,6 @@
 #
 # Programme to test and control LCD back light
 #
-
 from time import sleep
 import automationhat as ahm
 import RPi.GPIO as GPIO
@@ -20,12 +19,11 @@ Programme to control LCD back light
 
 Press CTRL+C to exit.
 """)
-
 try:
     while True:
         #ahmi3 = ahm.input.three.read()
         #p25 = GPIO.output(25, not GPIO.input(25))
-        if ahm.input.three.is_on():
+        if ahm.input.three.is_off():
             GPIO.output(25,1)
             #print (ahmi3)
             #print (p25)
