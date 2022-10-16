@@ -7,19 +7,18 @@
 #
 #INPUTA = 300  # 3.5 mins  = 210
 #INPUTB = 600  # 7.5 mins  = 450
-#IMAGE_FILE = "/home/pi/Pimoroni/automationhat/examples/hat-mini/images/PumpImage.jpg"
 #LOG_FILE = "/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt"
 INPUTA = 13  # 3.5 mins  = 210
 INPUTB = 16  # 7.5 mins  = 450
-IMAGE_FILE = "/home/pi/PumpImage.jpg"
 LOG_FILE = "/home/pi/pumplogfile.txt"
 MESSAGE1 = "Press I or II to run the pump!"
 
 from datetime import datetime
-import sys
+#import sys
 import time 
 import threading
 from PIL import Image, ImageDraw, ImageFont
+from fonts.ttf import RobotoBlackItalic as UserFont
 import automationhat as ahm
 import RPi.GPIO as GPIO
 import ST7735 as ST7735
@@ -44,8 +43,8 @@ def LCDandButtons():
     HEIGHT = disp.height
     img = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
     draw = ImageDraw.Draw(img)
-    fontM1 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 32)
-    fontM2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
+    fontM1 = ImageFont.truetype(UserFont, 38)
+    fontM2 = ImageFont.truetype(UserFont, 24)
     size_x, size_y = draw.textsize(MESSAGE1, fontM1)
     text_x = 160
     text_y = (80 - size_y) // 2
@@ -71,7 +70,7 @@ def LCDandButtons():
                 ahm.relay.one.off() # turns pump off
                 event.clear() # clears shared event
         while ahm.input.two.is_on(): 
-                GPIO.output(25,1) # Ensure backlight is on
+                #GPIO.output(25,1) # Ensure backlight is on
                 event.set() # Ensures that backlight thread doesnt turn if off during long runs 
                 ctemp = vcgm.measure_temp()
                 with open(LOG_FILE,'a') as l:
