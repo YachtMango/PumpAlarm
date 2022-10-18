@@ -20,7 +20,6 @@ import threading
 from PIL import Image, ImageDraw, ImageFont
 from fonts.ttf import RobotoBlackItalic as UserFont
 import automationhat as ahm
-#import RPi.GPIO as GPIO
 import ST7735 as ST7735
 from vcgencmd import Vcgencmd
 vcgm = Vcgencmd()
