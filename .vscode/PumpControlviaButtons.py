@@ -20,7 +20,6 @@ import threading
 from PIL import Image, ImageDraw, ImageFont
 from fonts.ttf import RobotoBlackItalic as UserFont
 import automationhat as ahm
-import RPi.GPIO as GPIO
 import ST7735 as ST7735
 from vcgencmd import Vcgencmd
 vcgm = Vcgencmd()
@@ -56,7 +55,6 @@ def LCDandButtons():
         draw.text((int(text_x - x), text_y), MESSAGE1, font=fontM1, fill=(255, 255, 0))
         disp.display(img)
         while ahm.input.one.is_on():
-                GPIO.output(25,1) # Ensure backlight is on
                 event.set() # Ensures that backlight thread doesnt turn if off during long runs 
                 ctemp = vcgm.measure_temp() # CPU temp
                 with open(LOG_FILE,'a') as l:
@@ -70,7 +68,6 @@ def LCDandButtons():
                 ahm.relay.one.off() # turns pump off
                 event.clear() # clears shared event
         while ahm.input.two.is_on(): 
-                #GPIO.output(25,1) # Ensure backlight is on
                 event.set() # Ensures that backlight thread doesnt turn if off during long runs 
                 ctemp = vcgm.measure_temp()
                 with open(LOG_FILE,'a') as l:
