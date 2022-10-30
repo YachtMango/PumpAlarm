@@ -84,9 +84,9 @@ def LCDandButtons():
 def Backlight():
     while True:
         if ahm.input.three.is_off() or event.is_set():  # check input from microbit light sensor or pump running turns backlight is on
-            GPIO.output(25,1)
+            ahm.GPIO.output(25,1)
         else:
-           GPIO.output(25,0)
+           ahm.GPIO.output(25,0)
         time.sleep (5)
 
 thread1 = threading.Thread(target=LCDandButtons)
