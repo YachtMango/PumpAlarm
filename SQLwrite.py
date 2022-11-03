@@ -4,9 +4,9 @@ import datetime
 import pandas as pd
 
 #set up db connection & open cursor
-con = sqlite3.connect("PClog.db")
+con = sqlite3.connect("/app/PCLogDB/PClog.db")
 cur = con.cursor()
-#cur.execute("CREATE TABLE pclog(Timestamp timestamp PRIMARY KEY,Day TEXT,Date date ,Time time,ComboDT TEXT,RT INTEGER,V REAL,Temp REAL)")
+cur.execute("CREATE TABLE pclog(Timestamp timestamp PRIMARY KEY,Day TEXT,Date date ,Time time,ComboDT TEXT,RT INTEGER,V REAL,Temp REAL)")
 
 #load csv into Pandas 
 logdata = pd.read_csv(datafileloc)
