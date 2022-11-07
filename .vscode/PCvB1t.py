@@ -10,7 +10,7 @@
 #LOG_FILE = "/home/pi/Pimoroni/automationhat/examples/hat-mini/pumplogfile.txt"
 INPUTA = 13  # 3.5 mins  = 210
 INPUTB = 16  # 7.5 mins  = 450
-LOG_FILE = "/home/pi/pumplogfile.txt"
+LOG_FILE = "/home/pump/pumplogfile.txt"
 MESSAGE1 = "Press I or II to run the pump !"
 
 from datetime import datetime
@@ -64,7 +64,7 @@ while True:     # code to display scolling text
             ahm.GPIO.output(25,1) # Ensure backlight is on 
             ctemp = vcgm.measure_temp() # CPU temp
             with open(LOG_FILE,'a') as l:
-                l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + " Runtime " + str(INPUTA) + " Input Volts " + str(ahm.analog.one.read())  + " CPU Temp = " + str(ctemp) + " °C" "\n")
+                l.write(str(time.time()) + "," + str(INPUTA) + "," + str(ahm.analog.one.read())  + "," + str(ctemp) +  "\n")
             ahm.relay.one.on() # turns pump on
             for i in reversed(range(1,INPUTA)):
                     time.sleep(1 - time.time() % 1)
@@ -76,7 +76,7 @@ while True:     # code to display scolling text
             ahm.GPIO.output(25,1) # Ensure backlight is on 
             ctemp = vcgm.measure_temp()
             with open(LOG_FILE,'a') as l:
-                l.write(datetime.now().strftime("%a %d/%m/%Y, %H:%M") + " Runtime " + str(INPUTB) + " Input Volts " + str(ahm.analog.one.read())  + " CPU Temp = " + str(ctemp) + " °C" "\n")
+                l.write(str(time.time()) + "," + str(INPUTB) + "," + str(ahm.analog.one.read())  + "," + str(ctemp) +  "\n")
             ahm.relay.one.on()  # 
             for i in reversed(range(1,INPUTB)):
                     time.sleep(1 - time.time() % 1)
