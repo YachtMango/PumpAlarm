@@ -1,10 +1,10 @@
 datafileloc = "/home/mango3/Downloads/Pump Log File Clean.csv"
+dbloc = "/home/mango3/Documents/PumpAlarm/PumpAlarm/PClog.db"
 import sqlite3
-import datetime
 import pandas as pd
 
 #set up db connection & open cursor
-con = sqlite3.connect("/app/PCLogDB/PClog.db")
+con = sqlite3.connect(dbloc)
 cur = con.cursor()
 cur.execute("CREATE TABLE pclog(Timestamp timestamp PRIMARY KEY,Day TEXT,Date date ,Time time,ComboDT TEXT,RT INTEGER,V REAL,Temp REAL)")
 
