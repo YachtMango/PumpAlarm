@@ -86,6 +86,8 @@ while True:     # code to display scolling text
     while ahm.input.two.is_on(): 
             ahm.GPIO.output(25,1) # Ensure backlight is on 
             ctemp = vcgm.measure_temp()
+            etemp = extemp.get_temperature() # external temp
+            itemp = intemp.get_temperature() # internal temp
             with open(LOG_FILE,'a') as l:
                 l.write(str(time.time()) + "," + str(INPUTB) + "," + str(ahm.analog.one.read())  + "," + str(ctemp) + "," + str(itemp) + "," + str(etemp) + "\n")
             ahm.relay.one.on()  # 
