@@ -12,7 +12,7 @@ INPUTA = 13  # 3.5 mins  = 210
 INPUTB = 16  # 7.5 mins  = 450
 LOG_FILE = "/home/pump/pumplogfile.txt"
 MESSAGE1 = "Press I or II to run the pump !"
-EXTTEMPID = '00000de08f5a'
+EXTTEMPID = '0b228128f0d0'
 INTTEMPID = '0315034334ff'
 
 from datetime import datetime
