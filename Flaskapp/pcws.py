@@ -28,7 +28,7 @@ app = Flask(__name__)
 @app.route('/',methods=['POST', 'GET'])
 def status(): 
 	return render_template('stats.html',volts=volts,etemp=etemp,ctemp=ctemp,itemp=itemp,tnow=tnow)
-@app.route("/update/", methods=['POST'])
+@app.route("/update/", methods=['GET','POST'])
 def update():
     volts = ahm.analog.one.read()
     ctemp = vcgm.measure_temp()
